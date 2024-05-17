@@ -7,23 +7,23 @@ $geoApiUrl = 'http://api.openweathermap.org/geo/1.0/direct';
 $geoUrl = "$geoApiUrl?q=$city&appid=$apiKey";
 
 $geoResponse = file_get_contents($geoUrl);
-$geoData = json_decode($geoResponse, true);
+$geoData = json_decode($geoResponse, false);
 
 if ($geoData) {
-    $latitude = $geoData[0]['lat'];
-    $longitude = $geoData[0]['lon'];
+    $latitude = $geoData[0]->lat;
+    $longitude = $geoData[0]->lon;
 
     $weatherApiUrl = 'http://api.openweathermap.org/data/2.5/weather';
     $weatherUrl = "$weatherApiUrl?lat=$latitude&lon=$longitude&appid=$apiKey";
 
     $weatherResponse = file_get_contents($weatherUrl);
-    $weatherData = json_decode($weatherResponse, true);
+    $weatherData = json_decode($weatherResponse, false);
 
-    if ($weatherData && isset($weatherData['weather'])) {
-        $weatherDescription = $weatherData['weather'][0]['description'];
-        $temperature = $weatherData['main']['temp'];
+    if ($weatherData && isset($weatherData->weather)) {
+        $weatherDescription = $weatherData->weather[0]->description;
+        $temperature = $weatherData->main->temp;
         $temperatureCelsius = $temperature - 273.15;
-        $humidity = $weatherData['main']['humidity'];
+        $humidity = $weatherData->main->humidity;
 
         echo "Weather in $city: $weatherDescription" . PHP_EOL;
         echo "Temperature: $temperatureCelsius °C" . PHP_EOL;
