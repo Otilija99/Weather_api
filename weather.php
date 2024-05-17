@@ -1,5 +1,5 @@
 <?php
-$apiKey = '4f67b7226b525b1dbf09530859f204b1';
+$apiKey = 'secret';
 
 $city = readline("Enter city name: ");
 
